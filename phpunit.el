@@ -3,7 +3,7 @@
 ;; Copyright © 2008 Ian Eure
 ;; $Id$
 
-;; Maintainer: Ian Eure <ieure@mac.com>
+;; Maintainer: Ian Eure <ian.eure@gmail.com>
 ;; Author: Ian Eure
 ;; Keywords: php phpunit xunit tests
 ;; Created: 2008-12-01
@@ -43,6 +43,11 @@
   "PHPUnit Mode version number.")
 
 (require 'compile)
+
+(defgroup phpunit nil
+  "Minor mode for running PHPUnit tests."
+  :prefix "phpunit-"
+  :group 'php)
 
 ;;;###autoload
 (defcustom phpunit-testable-list
