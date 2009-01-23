@@ -1,6 +1,6 @@
 ;;; phpunit.el --- Interact with PHPUnit
 
-;; Copyright © 2008 Ian Eure
+;; Copyright © 2008, 2009 Ian Eure
 ;; $Id$
 
 ;; Maintainer: Ian Eure <ian.eure@gmail.com>
@@ -116,7 +116,7 @@ FILE is a string or function for the file name of the PHPUnit test file."
   (make-sparse-keymap)
   :group 'phpunit
   :global nil)
-(define-key phpunit-minor-mode-map "\C-c\C-lr" 'phpunit-test-or-retest)
+(define-key phpunit-minor-mode-map "\C-c\C-lr" 'phpunit-run-test-or-retest)
 (define-key phpunit-minor-mode-map "\C-c\C-lt" 'phpunit-test-this)
 (define-key phpunit-minor-mode-map "\C-c\C-lf" 'phpunit-find-test-file)
 
