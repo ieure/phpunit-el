@@ -39,7 +39,7 @@
 ;; If you customize 'phpunit-testable-list, a corresponding test file
 ;; will be searched for when you open a .php file.
 
-(defconst phpunit-version-number "0.8.5"
+(defconst phpunit-version-number "0.8.6"
   "PHPUnit Mode version number.")
 
 (require 'compile)
@@ -160,16 +160,20 @@ Run `phpunit-setup-hook'."
    (list
     (let ((command phpunit-command))
       (phpunit-read-command command))))
+  (save-some-buffers t)
   (unless (equal command (eval phpunit-command))
     (setq phpunit-command command))
-  (setq-default compilation-directory default-directory)
+  (setq-default phpunit-run-directory default-directory)
   (compilation-start command 'phpunit-run-mode))
 
 ;;;###autoload
 (defun phpunit-run-test-or-retest ()
   "Re-run the last PHPUnit test (if any), or start a new test."
   (interactive)
-  (or (and phpunit-history (phpunit-run-test (car phpunit-history)))
+  (or (and phpunit-history
+           (let ((default-directory (or phpunit-run-directory
+                                        default-directory)))
+             (phpunit-run-test (car phpunit-history))))
       (call-interactively 'phpunit-run-test)))
 
 ;;;###autoload
@@ -240,6 +244,9 @@ Returns `nil' if FILE doesn't match any patterns in `phpunit-testable-list'"
 
 (add-hook 'php-mode-hook
           '(lambda ()
-             (and (phpunit-testablep) (phpunit-minor-mode t))))
+             (and (or (phpunit-testablep)
+                      (and (buffer-file-name)
+                           (string-match "/test\\(s\\)?/" (buffer-file-name))))
+                  (phpunit-minor-mode t))))
 
 (provide 'phpunit)
