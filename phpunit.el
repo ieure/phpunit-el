@@ -246,7 +246,10 @@ Returns `nil' if FILE doesn't match any patterns in `phpunit-testable-list'"
           '(lambda ()
              (and (or (phpunit-testablep)
                       (and (buffer-file-name)
-                           (string-match "/test\\(s\\)?/" (buffer-file-name))))
+                           (string-match "/test\\(s\\)?/" (buffer-file-name)))
+                      (string= (substring (buffer-file-name) 0
+                                          (length phpunit-run-directory))
+                               phpunit-run-directory))
                   (phpunit-minor-mode t))))
 
 (provide 'phpunit)
